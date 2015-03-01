@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# usage: 
+# ./etherfetchSc.sh http://etherpad.address.com/xxxyyyyzzz
 # script to parse etherpad and pipe it live into supercollider.js
 # multiuser livecoding session
 # requires curl and https://github.com/crucialfelix/supercolliderjs
