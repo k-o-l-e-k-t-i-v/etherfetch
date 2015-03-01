@@ -6,6 +6,11 @@
 # multiuser livecoding session
 # requires curl and https://github.com/crucialfelix/supercolliderjs
 
+if (( $# < 1 )); then
+  echo "please specify etherpad address"
+  exit 1
+fi
+
 rm /tmp/lang
 mkfifo /tmp/lang
 (while true; do curl -vs $@/export/txt > /tmp/lang && sleep 2s ; done)&
