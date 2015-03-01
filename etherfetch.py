@@ -22,11 +22,13 @@ else:
         #fetch the code
         pad_txt = fetch(pad_url, pad_id)
         pad_size = len(pad_txt)
-        f = file(pad_out,'w')
-        f.write(pad_txt)
-        f.close()
+        sys.stdout.write(pad_txt)
+        sys.stdout.flush()
+        #f = open(pad_out,'w')
+        #f.write(pad_txt)
+        #f.close()
 
-	print "fetched %d bytes from %s" % (pad_size, pad_id)
+	#print "fetched %d bytes from %s" % (pad_size, pad_id)
 
         #sleep some
 	time.sleep(5)
