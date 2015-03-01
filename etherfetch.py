@@ -22,8 +22,6 @@ else:
         #fetch the code
         pad_txt = fetch(pad_url, pad_id)
         pad_size = len(pad_txt)
-
-        #print pad_txt
         f = file(pad_out,'w')
         f.write(pad_txt)
         f.close()
