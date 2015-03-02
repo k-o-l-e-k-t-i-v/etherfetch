@@ -4,7 +4,7 @@
 # ./etherfetchSc.sh http://etherpad.address.com/xxxyyyyzzz
 # script to parse etherpad and pipe it live into supercollider.js
 # multiuser livecoding session
-# requires curl and https://github.com/crucialfelix/supercolliderjs
+# requires curl
 
 if (( $# < 1 )); then
   echo "please specify etherpad address"
@@ -12,9 +12,11 @@ if (( $# < 1 )); then
 fi
 
 rm /tmp/lang
+rm /tmp/lang2
 mkfifo /tmp/lang
+mkfifo /tmp/lang2
 (while true; do curl -vs $@/export/txt > /tmp/lang && sleep 2s ; done)&
-tail -f /tmp/lang 2> >(grep -v truncated >&2) | grep -v -e "^\/\/.*" --line-buffered | awk -v RS="" '{gsub (/\n/,"")}1' | sclang
+tail -f /tmp/lang 2> >(grep -v truncated >&2) | grep -v -e "^\/\/.*" --line-buffered | sclang
 #(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | sed 'Wf a\'/n'/g')
 #(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk 'BEGIN {RS=""}{gsub(/\n/,"",$0); print $0}' | supercolliderJs)
 #(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk '{printf "%s",$0} END {print ""}' | supercolliderJs)
