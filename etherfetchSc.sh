@@ -14,7 +14,9 @@ fi
 rm /tmp/lang
 mkfifo /tmp/lang
 (while true; do curl -vs $@/export/txt > /tmp/lang && sleep 2s ; done)&
-(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk 'BEGIN {RS=""}{gsub(/\n/,"",$0); print $0}' | supercolliderJs)
+tail -f /tmp/lang 2> >(grep -v truncated >&2) | grep -v -e "^\/\/.*" --line-buffered | awk -v RS="" '{gsub (/\n/,"")}1' | sclang
+#(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | sed 'Wf a\'/n'/g')
+#(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk 'BEGIN {RS=""}{gsub(/\n/,"",$0); print $0}' | supercolliderJs)
 #(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk '{printf "%s",$0} END {print ""}' | supercolliderJs)
 #(tail -f /tmp/lang | grep -v -e "^\/\/.*" --line-buffered | awk 1 OSR=' ' | sed -u 'N;s/\n//')
 # /tmp/preproc | supercolliderJs
